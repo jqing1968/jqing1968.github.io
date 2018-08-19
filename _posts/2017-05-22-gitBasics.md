@@ -5,7 +5,7 @@ date:   2017-05-22 15:10
 categories: 软件配置
 permalink: /archivers/gitba
 ---
-# GIT
+
 
 ![git](https://git-scm.com/images/logo@2x.png)
 

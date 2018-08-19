@@ -7,7 +7,8 @@ layout: default
     <h1 class="post-title">{{ page.title }}</h1>
     <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
   </header>
-
+  <!-- 增加mermaid支持 -->
+  <script src="{{ "/js/mermaid.min.js" | prepend: site.baseurl }}"></script>
   <article class="post-content">
     {{ content }}
   </article>
@@ -15,7 +16,11 @@ layout: default
   {% include comment.html %}
 
 </div>
+<!-- 增加mermaid支持 -->
+<script src="{{ "/js/mermaid.min.js" | prepend: site.baseurl }}"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
 
+<!-- 新增评论区 -->
 <div id="gitmentContainer" ></div>
 <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
