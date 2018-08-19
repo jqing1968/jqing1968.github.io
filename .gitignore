@@ -1,4 +1,5 @@
 _site/*
+serve
 .sass-cache
 .c9
 Gemfile.lock
