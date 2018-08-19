@@ -5,7 +5,6 @@ date:   2018-07-01 12:10
 categories: 软件配置
 permalink: /archivers/gitad
 ---
-# GIT高级功能
 
 ### 在整个git仓库提交历史中找寻并删除内容
 

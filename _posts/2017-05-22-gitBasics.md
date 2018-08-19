@@ -1,11 +1,10 @@
 ---
 layout: post
-title:  "git基本用法"
+title:  "GIT基本用法"
 date:   2017-05-22 15:10
 categories: 软件配置
 permalink: /archivers/gitba
 ---
-
 
 ![git](https://git-scm.com/images/logo@2x.png)
 
