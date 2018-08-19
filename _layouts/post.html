@@ -16,7 +16,7 @@ layout: default
 
 </div>
 
-<div id="gitmentContainer"></div>
+<div id="gitmentContainer" ></div>
 <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
@@ -29,4 +29,15 @@ var gitment = new Gitment({
     },
 });
 gitment.render('gitmentContainer');
+
+var delTip=document.querySelector(".gitment-footer-container")
+delTip.parentNode.removeChild(delTip)
 </script>
+<style>
+  .gitment-comments-init-btn:disabled, .gitment-editor-submit:disabled{
+    background: #509ABE;
+  }
+  .gitment-editor-submit:hover, .gitment-comments-init-btn:hover{
+    background: #607D8B;
+  }
+</style>
