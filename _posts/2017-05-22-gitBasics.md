@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "GIT基本用法"
+title:  "Git基本用法"
 date:   2017-05-22 15:10
 categories: 软件配置
 permalink: /archivers/gitba

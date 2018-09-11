@@ -1,0 +1,213 @@
+<h2 id="基本介绍">基本介绍</h2>
+<p>(1) web储存相关的技术
+<strong>cookie</strong>
+<strong>sessionStorage</strong>
+<strong>localStrage</strong>
+<strong>应用缓存</strong>
+<strong>hash介绍</strong></p>
+
+<h2 id="cookie存储"><strong>cookie存储</strong></h2>
+
+<blockquote>
+  <p>cookie是一种会话跟踪技术，用于在进行网页访问的时候，存储页面中的某些数据信息。</p>
+</blockquote>
+
+<h3 id="cookie的使用注意点"><strong>cookie的使用注意点</strong></h3>
+
+<p>(1) 使用cookie来进行数据存储的大小有限制，4KB</p>
+
+<p>(2) 每个网页中存储cookie的个数（最多50）和每个网站中存储cookie的个数都有限制（200）</p>
+
+<p>(3) 各个不同的浏览器对cookie的数量也不相同</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">IE6</span><span class="p">.</span><span class="mi">0</span>      <span class="err">每个域为</span><span class="mi">20</span><span class="err">个，大小为</span><span class="mi">4095</span><span class="err">个字节</span>  
+ <span class="nx">IE7</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="mf">8.0</span>  <span class="err">每个域为</span><span class="mi">50</span><span class="err">个</span> <span class="err">，大小为</span><span class="mi">4095</span><span class="err">个字节</span>  
+ <span class="nx">Opera</span>      <span class="err">每个域为</span><span class="mi">30</span><span class="err">个</span> <span class="err">，</span><span class="mi">4096</span><span class="err">个字节</span>  
+ <span class="nx">FF</span>         <span class="err">每个域为</span><span class="mi">50</span><span class="err">个</span>  <span class="err">，大小为</span><span class="mi">4097</span><span class="err">个字节</span>  
+ <span class="nx">Safari</span>     <span class="err">没有个数限制，大小为</span><span class="mi">4097</span><span class="err">个字节</span>  
+ <span class="nx">Chrome</span>      <span class="err">每个域为</span><span class="mi">53</span><span class="err">个，大小为</span><span class="mi">4097</span><span class="err">个字节</span>  
+</code></pre></div></div>
+
+<p><strong>总结</strong>：在进行页面cookie操作的时候，应该尽量保证cookie个数小于20个，总大小 小于4KB</p>
+
+<p>(4) cookie数据的过期时间</p>
+
+<p>1）默认情况下，cookie存储的内容是一次性的，它的有效期间是当前会话（需要把整个浏览器都关闭会话就结束）</p>
+
+<p>2）设置过期时间：通过expires=time;的格式来进行指定, 设置了之后只要没有超过过期时间，那么数据将一直都在</p>
+
+<p>(5) cookie是不可以跨浏览器的(在IE中保存的cookie, 不可以在火狐中使用)</p>
+
+<p>(6) cookie是不可以跨域的(跨域名)
+示例：127.0.0.1/code/test.html 和127.0.0.1/code/test1.html可以访问</p>
+
+<p>网络请求的常见路径：</p>
+
+<p><code class="highlighter-rouge">http://www.baidu.com:80/资源  协议://域名.后缀:端口号/资源</code></p>
+
+<p>不能跨域的含义：就是只有 （协议+域名+后缀+端口）号都相同才能相互访问</p>
+
+<h3 id="cookie的设置和使用"><strong>cookie的设置和使用</strong></h3>
+
+<p>1）设置方法：</p>
+
+<p>设置cookie数据</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="s2">"name=zhangsan"</span><span class="p">;</span>
+</code></pre></div></div>
+<p>设置cookie数据和过期的时间</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="s2">"name=zhangsan; expires="</span><span class="o">+</span><span class="nx">date</span><span class="o">+</span><span class="s2">";"</span><span class="p">;</span>
+</code></pre></div></div>
+<p>删除cookie数据：原理（当前的时间超过了cookie的过期时间那么该数据就会被删除;</p>
+
+<p>2）使用注意：</p>
+
+<p>在设置cookie的时候，一次只能设置一个数据（一个键值对），不能进行批量设置</p>
+
+<h3 id="cookie封装示意"><strong>cookie封装示意</strong></h3>
+
+<p>(封装为jQuery实例)</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">;(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="na">addCookie</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">day</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">domain</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 处理默认保存的路径</span>
+      <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s2">"/"</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">currentPath</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">index</span><span class="p">);</span>
+      <span class="nx">path</span> <span class="o">=</span> <span class="nx">path</span> <span class="o">||</span> <span class="nx">currentPath</span><span class="p">;</span>
+      <span class="c1">// 处理默认保存的域名</span>
+      <span class="nx">domain</span> <span class="o">=</span> <span class="nx">domain</span> <span class="o">||</span> <span class="nb">document</span><span class="p">.</span><span class="nx">domain</span><span class="p">;</span>
+      <span class="c1">// 处理默认的过期时间</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">day</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="nx">key</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">+</span> <span class="nx">value</span> <span class="o">+</span> <span class="s2">";path="</span> <span class="o">+</span> <span class="nx">path</span> <span class="o">+</span> <span class="s2">";domain="</span> <span class="o">+</span> <span class="nx">domain</span> <span class="o">+</span> <span class="s2">";"</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+        <span class="nx">date</span><span class="p">.</span><span class="nx">setDate</span><span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="o">+</span> <span class="nx">day</span><span class="p">);</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="nx">key</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">+</span> <span class="nx">value</span> <span class="o">+</span> <span class="s2">";expires="</span> <span class="o">+</span> <span class="nx">date</span><span class="p">.</span><span class="nx">toGMTString</span><span class="p">()</span> <span class="o">+</span> <span class="s2">";path="</span> <span class="o">+</span> <span class="nx">path</span> <span class="o">+</span> <span class="s2">";domain="</span> <span class="o">+</span> <span class="nx">domain</span> <span class="o">+</span> <span class="s2">";"</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">getCookie</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">temp</span> <span class="o">=</span> <span class="nx">res</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">trim</span><span class="p">()</span> <span class="o">===</span> <span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="nx">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="c1">// 只能删除保存在默认路径下的cookie,如需删除指定路径的cookie需带上path参数</span>
+    <span class="na">delCookie</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">addCookie</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">getCookie</span><span class="p">(</span><span class="nx">key</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">path</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">,</span> <span class="nb">window</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="sessionstorage存储">sessionStorage存储</h2>
+
+<h3 id="简单说明"><strong>简单说明</strong></h3>
+
+<p>（1）在存储用户数据的时候，因为cookie可以存储的数据比较小才4KB左右，所以也可以考虑使用sessionStorage来存储,大小限制为2M左右</p>
+
+<p>（2）该技术和localStorage是h5推出的，因此在使用的时候，需要考虑到兼容性的问题</p>
+
+<p>（3）相关资料：<a href="http://www.w3school.com.cn/html5/html_5_webstorage.asp">w3school</a></p>
+
+<p>（4）简单介绍和使用：</p>
+
+<p>001 sessionStorage：会话存储技术（session-会话）</p>
+
+<p>002 该技术和cookie一样，一样浏览器退出了，那么保存的数据就会</p>
+
+<p>003 演示sessionStorage技术的相关操作(添加\获取\更新\删除\清空)</p>
+
+<h3 id="示例代码"><strong>示例代码</strong></h3>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn1"</span><span class="nt">&gt;</span>添加<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn2"</span><span class="nt">&gt;</span>获取<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn3"</span><span class="nt">&gt;</span>更新<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn4"</span><span class="nt">&gt;</span>删除<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"btn5"</span><span class="nt">&gt;</span>清空<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">"age"</span><span class="p">,</span><span class="s2">"18"</span><span class="p">);</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">"color"</span><span class="p">,</span><span class="s2">"red"</span><span class="p">);</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">"des"</span><span class="p">,</span><span class="s2">"no des"</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">oInput</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"input"</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">oBtn1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">".btn1"</span><span class="p">);</span>
+
+    <span class="nx">oBtn1</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//添加操作</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span><span class="nx">oInput</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">};</span>
+    <span class="kd">var</span> <span class="nx">oBtn2</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">".btn2"</span><span class="p">);</span>
+    <span class="nx">oBtn2</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//获取操作</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s2">"name"</span><span class="p">));</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">oBtn3</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">".btn3"</span><span class="p">);</span>
+    <span class="nx">oBtn3</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//更新操作</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span><span class="nx">oInput</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">};</span>
+    <span class="kd">var</span> <span class="nx">oBtn4</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">".btn4"</span><span class="p">);</span>
+    <span class="nx">oBtn4</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//删除操作</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">removeItem</span><span class="p">(</span><span class="s2">"name"</span><span class="p">);</span>
+    <span class="p">};</span>
+    <span class="kd">var</span> <span class="nx">oBtn5</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">".btn5"</span><span class="p">);</span>
+    <span class="nx">oBtn5</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//清空操作</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">clear</span><span class="p">();</span>
+    <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<h2 id="localstorage存储">localStorage存储</h2>
+
+<h3 id="简单说明-1"><strong>简单说明</strong></h3>
+
+<p>（1）简单对比：保存在本地 + 没有时间限制</p>
+
+<p>（2）大小比较：4K 5M 20M</p>
+
+<p>（3）使用方式和sessionStorage相同<code class="highlighter-rouge">window.localStorage.操作</code></p>
+
+<h2 id="应用程序缓存">应用程序缓存</h2>
+
+<p>（1）简单介绍：</p>
+
+<p>h5推出的应用程序缓存，可以对Web页面进行缓存，并且可以在没有网络的情况下进行访问</p>
+
+<p>兼容说明：所有主流浏览器均支持应用程序缓存，除了 Internet Explorer</p>
+
+<p>（2）主要优点：</p>
+
+<p>1）支持离线浏览（没有网络的情况下依然可以查看）</p>
+
+<p>2）速度更快，性能更好（使用缓存文件可以提高访问的速度）</p>
+
+<p>3）减轻服务器端的压力 浏览器将只从服务器下载更新过或更改过的资源</p>
+
+<p>（3）代码演示</p>
+
+<p>1）在页面中加载资源文件（图片），调试工具窗口选择（none network）表示网络无法连接</p>
+
+<p>2）新创建xx.appcache文件，在该文件配置要缓存的内容</p>
+
+<p>3）设置html页面中的manifest属性为配置文件路径</p>
+
+<p>（4）配置文件示例</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">CACHE</span> <span class="nx">MANIFEST</span>
+<span class="nx">CACHE</span><span class="p">:</span>
+<span class="err">#</span> <span class="err">需要缓存的列表</span>
+<span class="mi">0</span><span class="p">.</span><span class="nx">jpg</span>
+
+<span class="nx">NETWORK</span><span class="p">:</span>
+<span class="err">#</span> <span class="err">不需要缓存的</span>
+<span class="mi">1</span><span class="p">.</span><span class="nx">jpg</span>
+
+<span class="nx">FALLBACK</span><span class="p">:</span>
+<span class="err">#</span> <span class="err">访问缓存失败后，备用访问的资源，第一个是访问源，第二个是替换文件</span>
+<span class="o">*</span><span class="p">.</span><span class="nx">html</span> <span class="o">/</span><span class="nx">offline</span><span class="p">.</span><span class="nx">html</span>
+<span class="mi">2</span><span class="p">.</span><span class="nx">jpg</span> <span class="o">/</span><span class="mi">3</span><span class="p">.</span><span class="nx">jpg</span>
+</code></pre></div></div>
+

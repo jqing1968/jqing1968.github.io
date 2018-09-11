@@ -1,0 +1,68 @@
+<h2 id="对称加密">对称加密</h2>
+
+<p>采用单钥密码系统的加密方法，同一个密钥可以同时用作信息的加密和解密，这种加密方法称为对称加密，也称为单密钥加密。</p>
+
+<div class="mermaid">
+sequenceDiagram
+    participant 加密
+    Note left of 加密:原始数据 明天回家
+    participant 解密
+    Note right of 解密:原始数据 明天回家
+    加密-&gt;解密: 密钥
+    Note over 加密,解密: 加密密文 jaskfhjdshf
+</div>
+
+<p>在对称加密算法中常用的算法有：DES、3DES、TDEA、Blowfish、RC2、RC4、RC5、IDEA、SKIPJACK、AES等。</p>
+
+<p><strong>DES3加密</strong></p>
+
+<p><a href="https://github.com/jqing1968/tools/blob/master/DES3.js">DES3.js</a></p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">var</span> <span class="nx">str</span><span class="o">=</span><span class="s2">"123"</span>
+    <span class="kd">var</span> <span class="nx">key</span><span class="o">=</span><span class="s2">"abcd"</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">DES3</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="nx">str</span><span class="p">));</span><span class="c1">//XupdZhIkd5k=</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">DES3</span><span class="p">.</span><span class="nx">decrypt</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="s2">"XupdZhIkd5k="</span><span class="p">));</span><span class="c1">//123</span>
+</code></pre></div></div>
+
+<h2 id="md5加密">MD5加密</h2>
+
+<p>MD5消息摘要算法（英语：MD5 Message-Digest Algorithm），一种被广泛使用的密码散列函数，可以产生出一个128位（16字节）的散列值（hash value），用于确保信息传输完整一致，利用MD5算法来进行文件校验的方案被大量应用到软件下载站、论坛数据库、系统文件安全等方面。</p>
+
+<p><a href="https://github.com/jqing1968/tools/blob/master/md5.js">MD5.js</a></p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">var</span> <span class="nx">str</span><span class="o">=</span><span class="s2">"123"</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">hex_md5</span><span class="p">(</span><span class="nx">str</span><span class="p">));</span>
+    <span class="c1">// 加盐 这个盐要足够长足够复杂足够咸</span>
+    <span class="kd">var</span> <span class="nx">salt</span><span class="o">=</span><span class="s2">"khadaffdfasfka**ssss!%$$^&amp;"</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">hex_md5</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span><span class="o">+</span><span class="nx">salt</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="base54编码">base54编码</h2>
+
+<p>Base64是网络上最常见的用于传输8Bit字节码的编码方式之一，Base64就是一种基于64个可打印字符来表示二进制数据的方法。</p>
+
+<p><a href="https://github.com/jqing1968/tools/blob/master/base64.js">base64.js</a></p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">var</span> <span class="nx">str</span><span class="o">=</span><span class="mi">123</span>
+    <span class="kd">var</span> <span class="nx">bs</span><span class="o">=</span><span class="k">new</span> <span class="nx">Base64</span><span class="p">()</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bs</span><span class="p">.</span><span class="nx">encode</span><span class="p">(</span><span class="nx">str</span><span class="p">));</span><span class="c1">//MTIz</span>
+    <span class="c1">// 解密</span>
+    <span class="kd">var</span> <span class="nx">str1</span><span class="o">=</span><span class="s2">"MTIz"</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bs</span><span class="p">.</span><span class="nx">decode</span><span class="p">(</span><span class="nx">str1</span><span class="p">));</span><span class="c1">//123</span>
+</code></pre></div></div>
+
+<h2 id="非对称加密">非对称加密</h2>
+
+<p>非对称加密算法需要两个密钥：公开密钥（publickey）和私有密钥（privatekey）。公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密</p>
+
+<p><strong>公钥</strong> :用于向外发布，任何人都能获取，
+<strong>私钥</strong> :要自己保存，切勿给别人</p>
+
+<p><strong>情况1</strong>：公钥用于【加密】， 私钥用于【解密】</p>
+
+<p>如果加密密钥是公开的，这用于客户给私钥所有者上传加密的数据，这被称作为公开密钥加密(狭义)。
+例如，网络银行的客户发给银行网站的账户操作的加密数据。HTTPS 等。</p>
+
+<p><strong>情况2</strong>：公钥用于【解密】，私钥用于【加密】</p>
+
+<p>如果解密密钥是公开的，用私钥加密的信息，可以用公钥对其解密，用于客户验证持有私钥一方发布的数据或文件是完整准确的，接收者由此可知这条信息确实来自于拥有私钥的某人，这被称作数字签名，公钥的形式就是数字证书。例如，从网上下载的安装程序，一般都带有程序制作者的数字签名，可以证明该程序的确是该作者（公司）发布的而不是第三方伪造的且未被篡改过（身份认证/验证）。</p>
+
+<p><strong>SSH免密码登录</strong></p>
+

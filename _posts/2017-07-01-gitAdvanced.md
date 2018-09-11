@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "GIT高级功能"
+title:  "Git高级功能"
 date:   2018-07-01 12:10
 categories: 软件配置
 permalink: /archivers/gitad

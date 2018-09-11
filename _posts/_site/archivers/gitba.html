@@ -1,0 +1,382 @@
+<p><img src="https://git-scm.com/images/logo@2x.png" alt="git" /></p>
+
+<h3 id="安装与配置">安装与配置</h3>
+
+<p><strong>使用 <code class="highlighter-rouge">apt-get</code> 方式安装</strong></p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">apt</span><span class="o">-</span><span class="nx">add</span><span class="o">-</span><span class="nx">repository</span> <span class="nx">ppa</span><span class="p">:</span><span class="nx">git</span><span class="o">-</span><span class="nx">core</span><span class="o">/</span><span class="nx">ppa</span>
+<span class="nx">apt</span><span class="o">-</span><span class="kd">get</span> <span class="nx">update</span>
+<span class="nx">apt</span><span class="o">-</span><span class="kd">get</span> <span class="nx">install</span> <span class="nx">git</span>
+</code></pre></div></div>
+
+<p><strong>生成 <code class="highlighter-rouge">ssh</code> 密钥</strong></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ssh</span><span class="o">-</span><span class="nx">keygen</span> <span class="o">-</span><span class="nx">t</span> <span class="nx">rsa</span> <span class="o">-</span><span class="nx">C</span> <span class="s2">"jianqing2015@outlook.com"</span>
+<span class="nx">cat</span> <span class="o">~</span><span class="sr">/.ssh/i</span><span class="nx">d_rsa</span><span class="p">.</span><span class="nx">pub</span>
+</code></pre></div></div>
+
+<p><strong>配置用户信息与常用简写</strong></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="s2">"jqing"</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">user</span><span class="p">.</span><span class="nx">email</span> <span class="s2">"jianqing2015@outlook.com"</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">amend</span> <span class="s2">"commit --amend -C HEAD"</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">back</span> <span class="s2">"reset --soft HEAD^"</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">br</span> <span class="nx">branch</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">ci</span> <span class="nx">commit</span> <span class="o">-</span><span class="nx">am</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">co</span> <span class="nx">checkout</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">edit</span> <span class="s2">"commit -am 'edit'"</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">ls</span> <span class="s2">"log --pretty=format:'%ad %C(yellow)%h %C(reset)%s %C(red)%d' --decorate --date=format:'%Y/%m/%d %H:%M'"</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">st</span> <span class="nx">status</span><span class="p">;</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">zip</span> <span class="s2">"archive master --format=zip --output ../code.zip"</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">alias</span><span class="p">.</span><span class="nx">showcommit</span> <span class="s2">"show --shortstat --pretty=format:'%ai %C(yellow)%h %C(reset)%s %C(red)%d'"</span>
+</code></pre></div></div>
+
+<p><strong>其他配置</strong></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">core</span><span class="p">.</span><span class="nx">editor</span> <span class="nx">vim</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>编码问题</strong></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">core</span><span class="p">.</span><span class="nx">quotepath</span> <span class="kc">false</span>
+<span class="nx">git</span> <span class="nx">config</span> <span class="o">--</span><span class="nb">global</span> <span class="nx">gui</span><span class="p">.</span><span class="nx">encoding</span> <span class="nx">utf</span><span class="o">-</span><span class="mi">8</span>
+</code></pre></div></div>
+
+<h3 id="操作">操作</h3>
+
+<p><strong>提交</strong></p>
+
+<ol>
+  <li>
+    <p>提交时显示所有 <code class="highlighter-rouge">diff</code> 信息</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">commit</span> <span class="o">-</span><span class="nx">v</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>使用新的提交信息重做上一次 <code class="highlighter-rouge">commit</code></p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">commit</span> <span class="o">--</span><span class="nx">amend</span> <span class="o">-</span><span class="nx">m</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong>分支</strong></p>
+
+<ol>
+  <li>
+    <p>列出所有远程分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">branch</span> <span class="o">-</span><span class="nx">r</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>列出所有本地分支和远程分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">branch</span> <span class="o">-</span><span class="nx">a</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>新建一个分支，但依然停留在当前分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">branch</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>新建一个分支，并切换到该分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">checkout</span> <span class="o">-</span><span class="nx">b</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>新建一个分支，指向某个tag</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">checkout</span> <span class="o">-</span><span class="nx">b</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span> <span class="p">(</span><span class="nx">tag</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>新建一个分支，指向指定commit</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">branch</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span> <span class="p">(</span><span class="nx">commit</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>新建一个分支，与指定的远程分支建立追踪关系</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">branch</span> <span class="o">--</span><span class="nx">track</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span> <span class="p">(</span><span class="nx">remote</span><span class="o">-</span><span class="nx">branch</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>切换到指定分支，并更新工作区</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">checkout</span> <span class="p">(</span><span class="nx">branch</span><span class="o">-</span><span class="nx">name</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>使分支的历史归零</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">checkout</span> <span class="o">--</span><span class="nx">orphan</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>切换到上一个分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">checkout</span> <span class="o">-</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>建立追踪关系，在现有分支与指定的远程分支之间</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">branch</span> <span class="o">--</span><span class="kd">set</span><span class="o">-</span><span class="nx">upstream</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span> <span class="p">(</span><span class="nx">remote</span><span class="o">-</span><span class="nx">branch</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>合并指定分支到当前分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">merge</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>选择一个commit，合并进当前分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">cherry</span><span class="o">-</span><span class="nx">pick</span> <span class="p">(</span><span class="nx">commit</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>删除分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">branch</span> <span class="o">-</span><span class="nx">d</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>删除远程分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">push</span> <span class="nx">origin</span> <span class="o">--</span><span class="k">delete</span> <span class="p">(</span><span class="nx">branch</span><span class="p">)</span>
+ <span class="nx">git</span> <span class="nx">branch</span> <span class="o">-</span><span class="nx">dr</span> <span class="p">(</span><span class="nx">remote</span><span class="o">/</span><span class="nx">branch</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong>查看信息</strong></p>
+
+<ol>
+  <li>
+    <p>显示commit历史，以及每次commit发生变更的文件</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">log</span> <span class="o">--</span><span class="nx">stat</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>搜索提交历史，根据关键词</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">log</span> <span class="o">-</span><span class="nx">S</span> <span class="p">(</span><span class="nx">keyword</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示某个commit之后的所有变动，每个commit占据一行</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">log</span> <span class="p">(</span><span class="nx">tag</span><span class="p">)</span> <span class="nx">HEAD</span> <span class="o">--</span><span class="nx">pretty</span><span class="o">=</span><span class="nx">format</span><span class="p">:</span><span class="o">%</span><span class="nx">s</span>
+ <span class="nx">git</span> <span class="nx">log</span> <span class="o">--</span><span class="nx">pretty</span><span class="o">=</span><span class="nx">oneline</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示某个commit之后的所有变动，其”提交说明”必须符合搜索条件</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">log</span> <span class="p">(</span><span class="nx">tag</span><span class="p">)</span> <span class="nx">HEAD</span> <span class="o">--</span><span class="nx">grep</span> <span class="nx">feature</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示某个文件的版本历史，包括文件改名</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">log</span> <span class="o">--</span><span class="nx">follow</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+ <span class="nx">git</span> <span class="nx">whatchanged</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示指定文件相关的每一次diff</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">log</span> <span class="o">-</span><span class="nx">p</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示指定文件是什么人在什么时间修改过</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">blame</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示暂存区和上一个commit的差异</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">diff</span> <span class="o">--</span><span class="nx">cached</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示工作区与当前分支最新commit之间的差异</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">diff</span> <span class="nx">HEAD</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示两次提交之间的差异</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">diff</span> <span class="p">(</span><span class="nx">first</span><span class="o">-</span><span class="nx">branch</span><span class="p">)...(</span><span class="nx">second</span><span class="o">-</span><span class="nx">branch</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示某次提交的元数据和内容变化</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">show</span> <span class="p">(</span><span class="nx">commit</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示某次提交发生变化的文件</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">show</span> <span class="o">--</span><span class="nx">name</span><span class="o">-</span><span class="nx">only</span> <span class="p">(</span><span class="nx">commit</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示某次提交时，某个文件的内容</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">show</span> <span class="p">(</span><span class="nx">commit</span><span class="p">):(</span><span class="nx">filename</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong>远程同步</strong></p>
+
+<ol>
+  <li>
+    <p>下载远程仓库的所有变动</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">fetch</span> <span class="p">(</span><span class="nx">remote</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>显示所有远程仓库</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">remote</span> <span class="o">-</span><span class="nx">v</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>推送所有分支到远程仓库</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">push</span> <span class="p">(</span><span class="nx">remote</span><span class="p">)</span> <span class="o">--</span><span class="nx">all</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong>撤销</strong></p>
+
+<ol>
+  <li>
+    <p>恢复暂存区的指定文件到工作区</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">checkout</span> <span class="o">--</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>恢复某个commit的指定文件到暂存区和工作区</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">checkout</span> <span class="p">(</span><span class="nx">commit</span><span class="p">)</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>恢复暂存区的所有文件到工作区</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">checkout</span> <span class="p">.</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>重置暂存区的指定文件，与上一次commit保持一致，但工作区不变</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">reset</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>重置暂存区与工作区，与上一次commit保持一致</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">reset</span> <span class="o">--</span><span class="nx">hard</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">reset</span> <span class="p">(</span><span class="nx">commit</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">reset</span> <span class="o">--</span><span class="nx">hard</span> <span class="p">(</span><span class="nx">commit</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>重置当前HEAD为指定commit，但保持暂存区和工作区不变</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">reset</span> <span class="o">--</span><span class="nx">keep</span> <span class="p">(</span><span class="nx">commit</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>暂时将未提交的变化移除，稍后再移入</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">stash</span>
+ <span class="nx">git</span> <span class="nx">stash</span> <span class="nx">pop</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="git-技巧"><em>git</em> 技巧</h3>
+
+<ol>
+  <li>
+    <p>删除远程tag</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">push</span> <span class="nx">origin</span> <span class="p">:</span><span class="nx">refs</span><span class="o">/</span><span class="nx">tags</span><span class="o">/</span><span class="p">(</span><span class="nx">tag</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>添加tag时附带信息</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">tag</span> <span class="o">-</span><span class="nx">a</span> <span class="nx">v1</span><span class="p">.</span><span class="mi">2</span> <span class="o">-</span><span class="nx">m</span> <span class="s2">"version 1.4"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>忽略已追踪文件的变动及恢复</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">update</span><span class="o">-</span><span class="nx">index</span> <span class="o">--</span><span class="nx">assume</span><span class="o">-</span><span class="nx">unchanged</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+ <span class="nx">git</span> <span class="nx">update</span><span class="o">-</span><span class="nx">index</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">assume</span><span class="o">-</span><span class="nx">unchanged</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>输出最后一次提交的改变</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">archive</span> <span class="o">-</span><span class="nx">o</span> <span class="p">..</span><span class="o">/</span><span class="nx">updated</span><span class="p">.</span><span class="nx">zip</span> <span class="nx">HEAD</span> <span class="nx">$</span><span class="p">(</span><span class="nx">git</span> <span class="nx">diff</span> <span class="o">--</span><span class="nx">name</span><span class="o">-</span><span class="nx">only</span> <span class="nx">HEAD</span><span class="o">^</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>开始一个无历史的新分支</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">checkout</span> <span class="o">--</span><span class="nx">orphan</span> <span class="nx">NEW_BRANCH_NAME_HERE</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>修改历史提交</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">git</span> <span class="nx">filter</span><span class="o">-</span><span class="nx">branch</span> <span class="o">-</span><span class="nx">f</span> <span class="o">--</span><span class="nx">env</span><span class="o">-</span><span class="nx">filter</span> <span class="s2">"GIT_AUTHOR_NAME='chuanfeng'; GIT_COMMITTER_NAME='chuanfeng';"</span> <span class="nx">HEAD</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>清理工作目录</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">du</span> <span class="o">-</span><span class="nx">hs</span> <span class="p">.</span><span class="nx">git</span><span class="o">/</span><span class="nx">objects</span>
+
+ <span class="nx">git</span> <span class="nx">gc</span> <span class="o">--</span><span class="nx">aggressive</span>
+ <span class="nx">git</span> <span class="nx">fsck</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="高级操作">高级操作</h3>
+
+<ul>
+  <li><a href="/archivers/gitad">查看</a></li>
+</ul>
