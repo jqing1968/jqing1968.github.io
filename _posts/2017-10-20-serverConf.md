@@ -21,11 +21,11 @@ sudo firewall-cmd --reload
 **修改配置**
     `vim /etc/vsftpd.conf`
 ```js
-    // 取消注释
-    chroot_list_enable=YES
-    chroot_list_file=/etc/vsftpd/chroot_list
-    // 增加
-    userlist_enable=YES
+// 取消注释
+chroot_list_enable=YES
+chroot_list_file=/etc/vsftpd/chroot_list
+// 增加
+userlist_enable=YES
 ```
 
 **重启ftp**
@@ -35,10 +35,10 @@ sudo firewall-cmd --reload
 
 使用以下命令创建用户。使用`/usr/sbin/nologinshell`来阻止访问ftp用户的bash shell
 ```js
-$ useradd -d /var/www/ -s /usr/sbin/nologin www
-$ passwd www
-$ echo www >> /etc/vsftpd/chroot_list
-$ chmod a-w www
+useradd -d /var/www/ -s /usr/sbin/nologin www
+passwd www
+echo www >> /etc/vsftpd/chroot_list
+chmod a-w www
 ```
 允许nologin shell的登录访问权限。打开/etc/shells并在末尾添加以下行。
 `/usr/sbin/nologin`
