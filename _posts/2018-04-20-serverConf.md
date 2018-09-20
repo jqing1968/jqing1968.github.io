@@ -2,7 +2,7 @@
 layout: post
 title:  "阿里云服务器相关配置"
 date:   2018-04-20 14:34
-categories: 软件配置
+categories: server
 permalink: /archivers/serverconf
 ---
 记录一下踩过的坑,菜鸡的忧伤,所以涉及到的端口都要去阿里云安全组配置,被这点坑过好几次了,防火墙开放端口和重载。
