@@ -75,11 +75,12 @@ index   index.html index.htm index.php default.html default.htm default.php;
 
 ## mySql
 **获取repo源**
-    `wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm`
+    `wget http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm`
 
-**安装**
-    `rpm -ivh mysql-community-release-el7-5.noarch.rpm`
-
+**安装源**
+    `yum localinstall mysql57-community-release-el7-7.noarch.rpm`
+**确认并安装**
+    `yum install mysql-server`
 **重启服务**
     `systemctl restart mysql.service`
 
